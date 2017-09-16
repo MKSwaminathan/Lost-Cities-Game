@@ -1,3 +1,4 @@
+# This is the makefile for the game
 
 CC=g++
 CFLAGS=-c
