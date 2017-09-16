@@ -1,14 +1,14 @@
 #pragma once
 
+#define NUM_COLORS 5
+
 typedef enum CardColor{Yellow, Blue, White, Green, Red};
 
-struct Card {
+typedef struct Card {
 
 	int value;
 	int color;
-};
-
-typedef Card Card;
+} Card;
 
 Card GDeck[60];
 
