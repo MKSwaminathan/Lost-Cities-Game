@@ -5,6 +5,7 @@
 #define NUM_COLORS 5
 #define NUM_CARDS_PER_COLOR 12
 
+/* 11, 12, 13 == wager cards */
 typedef enum CardColor { 
   YELLOW = 0, 
   BLUE, 

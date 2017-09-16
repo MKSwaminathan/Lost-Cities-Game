@@ -6,13 +6,13 @@
 
 class Deck {
 	public:
-	static std::vector< std::vector<bool> > possible_cards_mask;
 	static std::vector<Card> current_deck;
 
 	static int size;
 			
 	Deck();
-	static void initPossibleCardsMask();
+	static void resetDeck();
+	static void fillDeck();
 	static void shuffle();
 	static Card draw();
 };

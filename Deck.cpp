@@ -2,20 +2,20 @@
 #include "Deck.h"
 
 // c++ inits
-std::vector< std::vector<bool> > Deck::possible_cards_mask(0, std::vector<bool>(0));
 std::vector<Card> Deck::current_deck(0);
 int Deck::size;
 
-void Deck::initPossibleCardsMask() {
-	for (int i = 0; i < NUM_COLORS - 1; i++){
-		for (int j = 0; j <  NUM_CARDS_PER_COLOR - 1; j++) {
-			Deck::possible_cards_mask[i][j] = true;
+
+void Deck::fillDeck() {
+	for (int i = 0; i < NUM_COLORS; i++){
+		for (int j = 0; j < NUM_CARDS_PER_COLOR; j++){
+			Deck::current_deck[(i*NUM_CARDS_PER_COLOR) + j].value = j + 2;
+			Deck::current_deck[(i*NUM_CARDS_PER_COLOR) + j].color = (CardColor) i;
 		}
 	}
 }
-
 void Deck::shuffle() {
-
+	std::random_shuffle(Deck::current_deck.begin(), Deck::current_deck.end());
 }
 
 Card Deck::draw(){
@@ -25,9 +25,16 @@ Card Deck::draw(){
 	return drawn;
 }
 
+void resetDeck() {
+	Deck::current_deck.clear();
+	Deck::current_deck.resize(NUM_TOTAL_CARDS);
+	Deck::fillDeck();
+	Deck::shuffle();
+	Deck::size = NUM_TOTAL_CARDS;
+}
 Deck::Deck() {
 	Deck::current_deck.resize(NUM_TOTAL_CARDS);
-	Deck::possible_cards_mask.resize(NUM_COLORS, std::vector<bool>(NUM_CARDS_PER_COLOR));
-	initPossibleCardsMask();
+	Deck::fillDeck();
+	Deck::shuffle();
 	Deck::size = NUM_TOTAL_CARDS;
 }
