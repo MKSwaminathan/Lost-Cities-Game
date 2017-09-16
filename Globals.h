@@ -1,8 +1,13 @@
-#pragma once
 
 #define NUM_COLORS 5
 
-typedef enum CardColor{Yellow, Blue, White, Green, Red};
+typedef enum CardColor { 
+  YELLOW = 0, 
+  BLUE, 
+  WHITE, 
+  GREEN, 
+  RED
+} CardColor;
 
 typedef struct Card {
 
