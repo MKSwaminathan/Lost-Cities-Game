@@ -1,30 +1,15 @@
 #include <iostream>
+#include "GlobalGameState.h"
 
-void Set_Up_List() {
+void InitSession() {
 
-	int x, y;
-	
-	for (x = 0; x < 5; x++) {
-	
-		for (y = 0; y < 12; y++) {
-			
-			All_Possible[12 * x + y].color = x;
-					
-			if(y > 8) {
-						
-				All_Possible[12 * x + y].value = 1;
-			}
+	GlobalGameState global_state;
+}
+int main () {
+	InitSession();
+	std::cout << "pls work" << std::endl;
+	return 0;
 
-			else {
-			
-				All_Possible[12 * x + y].value = y + 2;
-			}
-		}
-	}
 }
 
-int main() {
-  Set_Up_List();
-  return 0;
 
-}
