@@ -1,6 +1,7 @@
 #include <iostream>
 #include "GlobalGameState.h"
 #include "Deck.h"
+#include <stdio.h>
 
 // c++ inits
 int GlobalGameState::deck_size;
@@ -12,6 +13,168 @@ std::vector< std::vector<Card> > GlobalGameState::ai_columns(0, std::vector<Card
 std::vector< std::vector<Card> > GlobalGameState::discard_piles(0, std::vector<Card>(0));
 std::vector<Card> GlobalGameState::human_hand(0);
 std::vector<Card> GlobalGameState::ai_hand(0);
+
+// draw to console functions
+
+char get_color(CardColor color) {
+
+	if (color == YELLOW) {
+	
+		return 'Y';
+	}
+
+	else if (color == BLUE) {
+	
+		return 'B';
+	}
+
+	else if (color == WHITE) {
+	
+		return 'W';
+	}
+
+	else if (color == GREEN) {
+	
+		return 'G';
+	}
+
+	else if (color == RED) {
+	
+		return 'R';
+	}
+
+	else {
+	
+		return NULL;
+	}
+}
+
+CardColor get_card_color(int x) {
+
+	if (x == 0) {
+
+		return YELLOW;
+	}
+
+	else if (x == 1) {
+
+		return BLUE;
+	}
+
+	else if (x == 2) {
+
+		return WHITE;
+	}
+
+	else if (x == 3) {
+
+		return GREEN;
+	}
+
+	else if (x == 4) {
+
+		return RED;
+	}
+
+	else {
+	
+		return YELLOW;
+	}
+
+}
+
+void GlobalGameState::draw_to_console() {
+
+	int x,y;
+	char color;
+	
+	std::cout << "*  *  *  *  *  *  *" << std::endl;
+	
+	// output ai columns
+	for (x = 0; x < 12; x++) {
+	
+		std::cout << "*  ";
+		for (y = 0; y < 5; y++) {
+			
+			color = get_color(get_card_color(y));
+			
+			if (GlobalGameState::ai_columns[y].size() >= 12 - x) {
+			
+				std::cout << color << GlobalGameState::ai_columns[y][12 - x].value;
+
+				if (GlobalGameState::ai_columns[y][12 - x].value < 10) {
+				
+					std::cout << " ";
+				}
+			}
+
+			else {
+			
+				std::cout << "   ";
+			}
+		}
+		std::cout << "*" << std::endl;
+	}
+
+	// output deck size
+	std::cout << "*  *  *  *  *  *  *" << std::endl;
+	std::cout << "*        " << GlobalGameState::deck_size;
+	if (GlobalGameState::deck_size < 10) {
+		std::cout << " ";
+	}
+	std::cout << "       *" << std::endl;
+	std::cout << "*  *  *  *  *  *  *" << std::endl;
+
+	// output player columns
+	for (x = 0; x < 12; x++) {
+
+		std::cout << "*  ";
+		for (y = 0; y < 5; y++) {
+
+			color = get_color(get_card_color(y));
+			
+			if (GlobalGameState::human_columns[y].size() > x) {
+
+				std::cout << color << GlobalGameState::human_columns[y][x].value;
+
+				if (GlobalGameState::human_columns[y][x].value < 10) {
+
+					std::cout << " ";
+				}
+			}
+
+			else {
+
+				std::cout << "   ";
+			}
+		}
+		std::cout << "*" << std::endl;
+	}
+	std::cout << "*  *  *  *  *  *  *" << std::endl << std::endl;
+
+	// output discard
+	std::cout << "Discard:" << std::endl;
+	for (x = 0; x < 5; x++) {
+	
+		for (y = 0; y < GlobalGameState::discard_piles[x].size(); y++) {
+		
+			std::cout << GlobalGameState::discard_piles[x][y].value << " ";
+		}
+
+		std::cout << std::endl;
+	}
+	std::cout << std::endl;
+	
+	// output hand
+	std::cout << "Hand:" << std::endl;
+	for (x = 0; x < 8; x++) {
+		
+		color = get_color(GlobalGameState::human_hand[0].color);
+		
+		std::cout << color << GlobalGameState::human_hand[x].value << " ";
+	}
+	std::cout << std::endl;
+}
 
 // member fxns
 int GlobalGameState::getDeckSize(){
@@ -95,7 +258,6 @@ GlobalGameState::GlobalGameState(){
 
 	Deck current_deck;	
 	GlobalGameState::deck_size = GlobalGameState::getDeckSize(); 
-
 }
 
 

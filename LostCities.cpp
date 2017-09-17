@@ -5,6 +5,7 @@ void InitSession() {
 
 	GlobalGameState global_state;
 	GlobalGameState::newGame();
+	GlobalGameState::draw_to_console();
 }
 int main () {
 	InitSession();

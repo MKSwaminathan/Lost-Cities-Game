@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Deck.h"
+#include <random>
 
 // c++ inits
 std::vector<Card> Deck::current_deck(0);
