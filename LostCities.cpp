@@ -8,8 +8,16 @@ void InitSession() {
 	GlobalGameState::draw_to_console();
 }
 int main () {
+	
 	InitSession();
-	std::cout << "pls work" << std::endl;
+	
+	while (1) {
+		
+		GlobalGameState::player_turn();
+		GlobalGameState::ai_turn();
+		GlobalGameState::draw_to_console();
+	}
+
 	return 0;
 
 }

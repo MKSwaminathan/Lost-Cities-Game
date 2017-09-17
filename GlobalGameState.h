@@ -27,5 +27,9 @@ class GlobalGameState {
 
 	// function for drawing the board to the console
 	static void draw_to_console();
+
+	// player turn functions
+	static void player_turn();
+	static void ai_turn();
 };
 
