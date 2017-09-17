@@ -25,7 +25,7 @@ Card Deck::draw(){
 	return drawn;
 }
 
-void resetDeck() {
+void Deck::resetDeck() {
 	Deck::current_deck.clear();
 	Deck::current_deck.resize(NUM_TOTAL_CARDS);
 	Deck::fillDeck();

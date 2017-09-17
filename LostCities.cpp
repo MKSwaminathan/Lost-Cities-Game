@@ -4,6 +4,7 @@
 void InitSession() {
 
 	GlobalGameState global_state;
+	GlobalGameState::newGame();
 }
 int main () {
 	InitSession();
