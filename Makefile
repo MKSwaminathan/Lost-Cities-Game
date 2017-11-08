@@ -2,8 +2,8 @@
 
 CC=g++
 CFLAGS=-c
-HEADERS = Globals.h GlobalGameState.h Deck.h
-OBJ = LostCities.o GlobalGameState.o Deck.o
+HEADERS = Globals.h GlobalGameState.h Deck.h  
+OBJ = LostCities.o GlobalGameState.o Deck.o Console.o
 
 %.o: %.c $(HEADERS)
 	$(CC) $(CFLAGS) -o $@ $< 
