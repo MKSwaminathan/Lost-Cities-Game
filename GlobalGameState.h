@@ -24,5 +24,12 @@ class GlobalGameState {
 	static Card draw_from_discard(Player plyr, CardColor color);
 	static void discard(Player plyr, Card discard_card, int handNum);
 	static bool play_card(Player plyr, Card card_to_play, int handNum);
+
+	// function for drawing the board to the console
+	static void draw_to_console();
+
+	// player turn functions
+	static void player_turn();
+	static void ai_turn();
 };
 
