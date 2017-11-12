@@ -16,7 +16,8 @@ typedef enum CardColor {
 
 typedef enum Player {
 	HUMAN = 1,
-	AI = 2
+	HUMAN2 = 2,
+	AI = 3
 } Player; 
 
 typedef struct Card {

@@ -3,8 +3,8 @@
 
 void InitSession() {
 
-	GlobalGameState global_state;
-	GlobalGameState::newGame();
+	GlobalGameState global_state(AI);
+	GlobalGameState::newGameHumanAI();
 	draw_to_console();
 }
 int main () {

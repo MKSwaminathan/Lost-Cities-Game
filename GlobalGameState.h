@@ -5,17 +5,21 @@
 class GlobalGameState {
 	public:
 	static std::vector< std::vector<Card> > human_columns;
+	static std::vector< std::vector<Card> > human2_columns;
 	static std::vector< std::vector<Card> > ai_columns;
 	static std::vector< std::vector<Card> > discard_piles;
 
 	static std::vector<Card> human_hand;
+	static std::vector<Card> human2_hand;
 	static std::vector<Card> ai_hand;
 	static int human_score;
+	static int human2_score;
 	static int ai_score;
 	static int deck_size;
 
-	GlobalGameState();	
-	static void newGame();
+	GlobalGameState(Player mode);	
+	static void newGameHumanAI();
+	static void newGameHumanHuman();
 	static int getDeckSize();
 	// moves to update Global State
 	// these functions are agnostic to the rules -- the 
