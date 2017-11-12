@@ -3,7 +3,7 @@
 CC=g++
 CFLAGS=-c
 HEADERS = Globals.h GlobalGameState.h Deck.h  
-OBJ = LostCities.o GlobalGameState.o Deck.o Console.o
+OBJ = LostCities.o GlobalGameState.o Deck.o Console.o SessionFlow.o
 
 %.o: %.c $(HEADERS)
 	$(CC) $(CFLAGS) -o $@ $< 
