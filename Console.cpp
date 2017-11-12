@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 #include "Console.h"
 
 // Console functions go here
@@ -46,14 +47,14 @@ CardColor get_card_color(int x) {
 }
 
 void draw_to_console() {
-	int x,y;
+	int x,y,value;
 	char color;
 	std::cout << std::endl;
-	std::cout << "*  *  *  *  *  *  *" << std::endl;
+	std::cout << "**  ***  ***  ***  ***  ***  **" << std::endl;
 	
 	// output ai columns
 	for (x = 0; x < 12; x++) {
-		std::cout << "*  ";
+		std::cout << "*    ";
 		for (y = 0; y < 5; y++) {
 			color = get_color(get_card_color(y));
 			if (GlobalGameState::ai_columns[y].size() >= 12 - x) {
@@ -65,24 +66,36 @@ void draw_to_console() {
 			}
 
 			else {
-				std::cout << "   ";
+				std::cout << "     ";
 			}
 		}
 		std::cout << "*" << std::endl;
 	}
 
 	// output deck size
-	std::cout << "*  *  *  *  *  *  *" << std::endl;
-	std::cout << "*        " << GlobalGameState::deck_size;
-	if (GlobalGameState::deck_size < 10) {
-		std::cout << " ";
-	}
-	std::cout << "       *" << std::endl;
-	std::cout << "*  *  *  *  *  *  *" << std::endl;
+	std::cout << "**  ***  ***  ***  ***  ***  *** * * * * * * * *" << std::endl;
+	std::cout << "*   DISCARD                   * DECK           *" << std::endl;
+	std::cout << "*                             * Cards Left: " << GlobalGameState::deck_size << " *" << std::endl;
+	std::cout << "*   ";
+	// output discard
+	for (x = 0; x < 5; x++) {
+		color = get_color(get_card_color(x));
+		if (GlobalGameState::discard_piles[x].size()) { 
+			y = GlobalGameState::discard_piles[x].size();		
+			value = GlobalGameState::discard_piles[x][y].value;
+			if (value > 10) std::cout << color << "wg ";
+			else if (value == 10) std::cout << color << value << " ";
+			else if (value < 10) std::cout << color << value << "  ";
+		} else {
+			std::cout << color << "    ";
+		}
+	} 
+	std::cout << " *                *" << std::endl;
+	std::cout << "**  ***  ***  ***  ***  ***  *** * * * * * * * *" << std::endl;
 
 	// output player columns
 	for (x = 0; x < 12; x++) {
-		std::cout << "*  ";
+		std::cout << "*    ";
 		for (y = 0; y < 5; y++) {
 			color = get_color(get_card_color(y));
 			if (GlobalGameState::human_columns[y].size() > x) {
@@ -94,30 +107,27 @@ void draw_to_console() {
 			}
 
 			else {
-				std::cout << "   ";
+				std::cout << "     ";
 			}
 		}
 		std::cout << "*" << std::endl;
 	}
-	std::cout << "*  *  *  *  *  *  *" << std::endl << std::endl;
-
-	// output discard
-	std::cout << "Discard:" << std::endl;
-	for (x = 0; x < 5; x++) {
-		color = get_color(get_card_color(x));
-		for (y = 0; y < GlobalGameState::discard_piles[x].size(); y++) {
-			std::cout << color << GlobalGameState::discard_piles[x][y].value << " ";
-		}
-
-		std::cout << std::endl;
-	}
-	std::cout << std::endl;
+	std::cout << "**  ***  ***  ***  ***  ***  **" << std::endl << std::endl;
+	
 	
 	// output hand
-	std::cout << "Hand:" << std::endl;
+	std::cout << "Human Hand:" << std::endl;
 	for (x = 0; x < 8; x++) {
 		color = get_color(GlobalGameState::human_hand[x].color);
-		std::cout << color << GlobalGameState::human_hand[x].value << " ";
+		int value = GlobalGameState::human_hand[x].value;
+		std::string cardValue = "value";
+		if (value == 11 || value == 12 || value == 13){
+			cardValue = "wg";
+		}
+		else {
+			cardValue = std::to_string(value);
+		}	
+		std::cout << color << cardValue << " ";
 	}
 	std::cout << std::endl;
 }
