@@ -7,16 +7,16 @@ void InitSession();
 int main () {
 	
 	InitSession();
-	BeginHumanAISession();
-//	BeginHumanHumanSession();
+//	BeginHumanAISession();
+	BeginHumanHumanSession();
 	return 0;
 
 }
 
 void InitSession() {
-	GlobalGameState global_state(AI);
-	GlobalGameState::newGameHumanAI();
-	draw_to_console(AI);
+	GlobalGameState global_state(HUMAN2);
+	GlobalGameState::newGameHumanHuman();
+	draw_to_console(HUMAN2);
 }
 
 

@@ -134,7 +134,7 @@ void GlobalGameState::newGameHumanAI() {
 }
 
 void GlobalGameState::newGameHumanHuman() {
-	std::cout << "Starting New Game Human VS. Human..." << std::endl;
+	std::cout << std::endl << std::endl << "Starting New Game Human VS. Human..." << std::endl;
 	int x;
 	// clear prev game
 	GlobalGameState::human_columns.clear();

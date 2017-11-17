@@ -184,84 +184,8 @@ void draw_to_console(Player mode) {
 		}
 	}
 
-
+	std::cout << std::endl << std::endl;
 }
 
 
-// player turn functions
-int card_choice() {
-	int choice;
-	while (1) {
-		std::cout << "Which card in your hand?" << std::endl;
-		std::cin >> choice;
-		if (choice > 0 && choice < 9) {
-			return choice - 1;
-		}
-		else {
-			std::cout << "That is not a valid choice." << std::endl;
-		}
-	}
-}
 
-void player1_turn() {
-	int choice, card;
-	while (1) {
-		std::cout << std::endl;
-		std::cout << "Do you want to play(0) or discard(1) a card?" << std::endl;
-		std::cin >> choice;
-		if (choice == 0) {
-			card = card_choice();
-			GlobalGameState::play_card(HUMAN, GlobalGameState::human_hand[card], card);
-			GlobalGameState::draw_from_deck(HUMAN); // need to add option to draw from discard
-			// FIX
-			//draw_to_console((Player) GAMEMODE);
-			return;
-		}
-		else if (choice == 1) {
-			card = card_choice();
-			GlobalGameState::discard(HUMAN, GlobalGameState::human_hand[card], card);
-			GlobalGameState::draw_from_deck(HUMAN);// need to add option to draw from discard
-			// FIX
-			//draw_to_console((Player) GAMEMODE);
-			return;
-		}
-		else {
-			std::cout << "That is not a valid choice." << std::endl;
-		}
-	}
-
-}
-
-void player2_turn() {
-	int choice, card;
-	while (1) {
-		std::cout << std::endl;
-		std::cout << "Do you want to play(0) or discard(1) a card?" << std::endl;
-		std::cin >> choice;
-		if (choice == 0) {
-			card = card_choice();
-			GlobalGameState::play_card(HUMAN2, GlobalGameState::human2_hand[card], card);
-			GlobalGameState::draw_from_deck(HUMAN2); // need to add option to draw from discard
-			// FIX
-			//draw_to_console((Player) GAMEMODE);
-			return;
-		}
-		else if (choice == 1) {
-			card = card_choice();
-			GlobalGameState::discard(HUMAN2, GlobalGameState::human2_hand[card], card);
-			GlobalGameState::draw_from_deck(HUMAN2);// need to add option to draw from discard
-			// FIX
-			//draw_to_console((Player) GAMEMODE);
-			return;
-		}
-		else {
-			std::cout << "That is not a valid choice." << std::endl;
-		}
-	}
-
-}
-
-// ai turn
-void ai_turn() {
-	
-}
