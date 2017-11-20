@@ -16,7 +16,6 @@ int main () {
 void InitSession() {
 	GlobalGameState global_state(HUMAN2);
 	GlobalGameState::newGameHumanHuman();
-	draw_to_console(HUMAN2);
 }
 
 

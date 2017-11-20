@@ -15,6 +15,7 @@ void Deck::fillDeck() {
 		}
 	}
 }
+
 void Deck::shuffle() {
 	std::random_shuffle(Deck::current_deck.begin(), Deck::current_deck.end());
 }

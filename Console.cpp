@@ -98,7 +98,7 @@ void draw_to_console(Player mode) {
 	// OUTPUT DECK 
 	std::cout << "**  ***  ***  ***  ***  ***  *** * * * * * * * *" << std::endl;
 	std::cout << "*   DISCARD                   * DECK           *" << std::endl;
-	std::cout << "*                             * Cards Left: " << GlobalGameState::deck_size << " *" << std::endl;
+	std::cout << "*                             * Cards Left: " << Deck::size << " *" << std::endl;
 	std::cout << "*   ";
 	// OUTPUT DISCARD
 	for (x = 0; x < 5; x++) {
@@ -118,18 +118,21 @@ void draw_to_console(Player mode) {
 
 	// OUTPUT PLAYER1 COLUMNS
 	for (x = 0; x < 12; x++) {
-		std::cout << "*    ";
+		std::cout << "*   ";
 		for (y = 0; y < 5; y++) {
 			color = get_color(get_card_color(y));
 			if (GlobalGameState::human_columns[y].size() > x) {
-				std::cout << color << GlobalGameState::human_columns[y][x].value;
+				// accnt for wager case
+				if (GlobalGameState::human_columns[y][x].value == 11 || \
+					GlobalGameState::human_columns[y][x].value == 12 || \
+					GlobalGameState::human_columns[y][x].value == 13) {
+					std::cout << color << "wg";
+				} else { std::cout << color << GlobalGameState::human_columns[y][x].value; }
 
-				if (GlobalGameState::human_columns[y][x].value < 10) {
-					std::cout << " ";
-				}
-			}
-
-			else {
+				if (GlobalGameState::human_columns[y][x].value < 10) std::cout << " "; 
+				if (GlobalGameState::human_columns[y][x].color == RED) std::cout << "  "; 
+				if (GlobalGameState::human_columns[y][x].color == RED && GlobalGameState::human_columns[y][x].value < 10) std::cout << "   "; 
+			} else {
 				std::cout << "     ";
 			}
 		}
