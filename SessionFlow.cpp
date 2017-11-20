@@ -8,17 +8,17 @@ void BeginHumanAISession() {
 
 void BeginHumanHumanSession() {
 	std::cout << "BEGIN HUMAN VERSUS HUMAN SESSION" << std::endl;
-	draw_to_console(HUMAN2);
 	int tmp_hand = 0;
 	int* handNum = &tmp_hand;
 	int move; 
 	bool valid;
 	Card card_to_play;
-	// while 1
-
+	
+	while(1) {
 		// PLAYER 1 TURN 
+		std::cout << "----- PLAYER 1 TURN -----" << std::endl;
+		draw_to_console(HUMAN2, HUMAN);
 		while(1) { 
-			// init move
 			card_to_play = prompt_init_move(HUMAN, handNum);
 			std::cout << "Do you want to play or discard your card? Enter 0 to play or 1 to discard: ";
 			std::cin >> move;
@@ -36,18 +36,42 @@ void BeginHumanHumanSession() {
 				break;
 			}
 		}
-		// update and display state
-		draw_to_console(HUMAN2);
-		// end move
+		draw_to_console(HUMAN2, HUMAN);
 		prompt_end_move(HUMAN, card_to_play.color);
-		// update and display state
-		draw_to_console(HUMAN2);
-		
-		// human2 move
-		// init move
-		// update and display state
-		// end move
-		// update and display state
+		draw_to_console(HUMAN2, HUMAN);
+		std::cout << "----- END OF PLAYER 1 TURN -----" << std::endl << std::endl;
+		if (Deck::size == 0) break;
+		// END OF PLAYER 1 MOVE
+
+	
+		// PLAYER 2 TURN
+		std::cout << "----- PLAYER 2 TURN -----" << std::endl;
+		draw_to_console(HUMAN2, HUMAN2);
+		while(1) { 
+			card_to_play = prompt_init_move(HUMAN2, handNum);
+			std::cout << "Do you want to play or discard your card? Enter 0 to play or 1 to discard: ";
+			std::cin >> move;
+			if (move == 0) {
+				std::cout << "playing card..." << std::endl;
+				valid = GlobalGameState::play_card(HUMAN2, card_to_play, *handNum);
+				if (!valid) {
+					std::cout << "Invalid move. Either you attempted to play a wager after you have already played a numbered card or your numbered card is not in ascending order of value. Try again..." << std::endl;
+					continue; 	
+				} else break;
+			}
+			else if (move == 1) {
+				std::cout << "discarding card..." << std::endl;
+				GlobalGameState::discard(HUMAN2, card_to_play, *handNum);
+				break;
+			}
+		}
+		draw_to_console(HUMAN2, HUMAN2);
+		prompt_end_move(HUMAN2, card_to_play.color);
+		draw_to_console(HUMAN2, HUMAN2);
+		std::cout << "----- END OF PLAYER 2 TURN -----" << std::endl << std::endl;
+		if (Deck::size == 0) break;
+		// END OF PLAYER 2 MOVE
+	}
 }
 
 // validity checks: valid card and card present in player hand
@@ -61,9 +85,16 @@ Card prompt_init_move(Player current_player, int* handNum) {
 	
 
 	while(1) {
-		std::cout << "Choose a card you want to play or discard: ";
-		std::getline (std::cin,chosen_card);
-		ErrType err = inputErr(HUMAN, chosen_card, current_color, wager_value, handNum);
+		while (1) {
+			std::cout << "Choose a card you want to play or discard: \n";
+			std::getline (std::cin,chosen_card);
+			if (chosen_card == "") {
+				std::cout << "\x1b[A";
+				std::cout << "\r";
+				continue;
+			} else break;
+		}
+		ErrType err = inputErr(current_player, chosen_card, current_color, wager_value, handNum);
 		if (err == INPUT) {
 			std::cout << "Invalid input. Your input should match the format shown in your hand.Try again." << std::endl;
 			continue; 	
@@ -99,6 +130,10 @@ void prompt_end_move(Player current_player, CardColor color_just_played) {
 				error = 0;
 				break;
 			case (2):
+				if (GlobalGameState::discard_piles[YELLOW].empty()) {
+					std::cout << "Invalid move. The discard pile you chose is empty. Try again." << std::endl;
+					error = 1; break;
+				}
 				if (color_just_played == YELLOW) {
 					std::cout << "Invalid move. You cannot draw from the dicard pile you just played to. Try again." << std::endl;
 					error = 1; 
@@ -110,46 +145,66 @@ void prompt_end_move(Player current_player, CardColor color_just_played) {
 				break;
 
 			case (3):
+				if (GlobalGameState::discard_piles[BLUE].empty()) {
+					std::cout << "Invalid move. The discard pile you chose is empty. Try again." << std::endl;
+					error = 1; break;
+				}
 				if (color_just_played == BLUE) {
 					std::cout << "Invalid move. You cannot draw from the dicard pile you just played to. Try again." << std::endl;
 					error = 1; 
+
 				} else {
 					GlobalGameState::draw_from_discard(current_player, BLUE);
-					std::cout << "drawing from yellow discard..." << std::endl;
+					std::cout << "drawing from blue discard..." << std::endl;
 					error = 0;
 				}		
 
 				break;
 
 			case (4):
+				if (GlobalGameState::discard_piles[WHITE].empty()) {
+					std::cout << "Invalid move. The discard pile you chose is empty. Try again." << std::endl;
+					error = 1; break;
+				}
+
 				if (color_just_played == WHITE) {
 					std::cout << "Invalid move. You cannot draw from the dicard pile you just played to. Try again." << std::endl;
 					error = 1; 
 				} else {
 					GlobalGameState::draw_from_discard(current_player, WHITE);
-					std::cout << "drawing from yellow discard..." << std::endl;
+					std::cout << "drawing from white discard..." << std::endl;
 					error = 0;
 				}		
 				break;
 
 			case (5):
+				if (GlobalGameState::discard_piles[GREEN].empty()) {
+					std::cout << "Invalid move. The discard pile you chose is empty. Try again." << std::endl;
+					error = 1; break;
+				}
+
 				if (color_just_played == GREEN) {
 					std::cout << "Invalid move. You cannot draw from the dicard pile you just played to. Try again." << std::endl;
 					error = 1; 
 				} else {
 					GlobalGameState::draw_from_discard(current_player, GREEN);
-					std::cout << "drawing from yellow discard..." << std::endl;
+					std::cout << "drawing from green discard..." << std::endl;
 					error = 0;
 				}		
 				break;
 
 			case (6):
+				if (GlobalGameState::discard_piles[RED].empty()) {
+					std::cout << "Invalid move. The discard pile you chose is empty. Try again." << std::endl;
+					error = 1; break;
+				}
+
 				if (color_just_played == RED) {
 					std::cout << "Invalid move. You cannot draw from the dicard pile you just played to. Try again." << std::endl;
 					error = 1; 
 				} else {
 					GlobalGameState::draw_from_discard(current_player, RED);
-					std::cout << "drawing from yellow discard..." << std::endl;
+					std::cout << "drawing from red discard..." << std::endl;
 					error = 0;
 				}		
 				break;
