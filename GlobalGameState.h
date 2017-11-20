@@ -1,4 +1,7 @@
+#ifndef GLOBAL_GAME_STATE_H
+#define GLOBAL_GAME_STATE_H
 #include <vector>
+#include "Deck.h"
 #include "Globals.h"
 
 
@@ -30,4 +33,4 @@ class GlobalGameState {
 	static bool play_card(Player plyr, Card card_to_play, int handNum);
 
 };
-
+#endif 

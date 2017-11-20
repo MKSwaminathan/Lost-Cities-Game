@@ -1,7 +1,6 @@
 #include <iostream>
-#include "GlobalGameState.h"
-#include "Deck.h"
 #include <stdio.h>
+#include "GlobalGameState.h"
 
 // c++ inits
 int GlobalGameState::deck_size;
